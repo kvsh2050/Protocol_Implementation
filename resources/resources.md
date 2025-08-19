@@ -10,3 +10,6 @@
 
 3. **Verilator**
    - Verilator Learn: (https://itsembedded.com/dhd/verilator_1/)
+
+4. **MEM MAPPING**
+   - For detailed memory mapping (https://nerdyelectronics.com/introduction-to-memory-mapping/)
