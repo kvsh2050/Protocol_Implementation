@@ -1,0 +1,212 @@
+$date
+	Tue Aug 19 16:39:25 2025
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module uart_tb $end
+$var wire 1 ! tx_bit $end
+$var reg 1 " clk $end
+$var reg 10 # data [9:0] $end
+$var reg 1 $ rst $end
+$var reg 1 % rx_bit $end
+$var integer 32 & i [31:0] $end
+$scope module rx $end
+$var wire 1 % bits $end
+$var wire 1 " clk $end
+$var wire 1 $ rst $end
+$var reg 7 ' bits_reg [6:0] $end
+$var reg 1 ( correct_frame $end
+$var reg 3 ) i [2:0] $end
+$var reg 2 * next_state [1:0] $end
+$var reg 1 + parity_adder $end
+$var reg 2 , state [1:0] $end
+$upscope $end
+$scope module tx $end
+$var wire 1 ! bits $end
+$var wire 1 " clk $end
+$var wire 1 $ rst $end
+$var wire 1 - pari $end
+$var reg 1 . bit_out $end
+$var reg 7 / data_bit [6:0] $end
+$var reg 4 0 i [3:0] $end
+$var reg 2 1 next_state [1:0] $end
+$var reg 2 2 state [1:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+bx 2
+bx 1
+bx 0
+b1010101 /
+x.
+0-
+bx ,
+x+
+bx *
+bx )
+x(
+bx '
+b0 &
+x%
+0$
+b1110010010 #
+0"
+x!
+$end
+#5000
+b0x *
+b1 1
+b0 ,
+0(
+0+
+b0 )
+b0 '
+b0 2
+1!
+1.
+b0 0
+1"
+1$
+#10000
+0"
+0$
+#15000
+b10 1
+b1 2
+b0x ,
+b0 *
+0%
+1"
+#20000
+0"
+#25000
+b11 1
+b0 ,
+b10 2
+0!
+0.
+1%
+b1 &
+1"
+#30000
+0"
+#35000
+b0 1
+1!
+1.
+b11 2
+b1 *
+0%
+b10 &
+1"
+#40000
+0"
+#45000
+b1 1
+b1 ,
+b0 2
+b11 &
+1"
+#50000
+0"
+#55000
+b10 1
+b1 2
+b1 )
+1+
+b1 '
+1%
+b100 &
+1"
+#60000
+0"
+#65000
+b11 1
+b10 )
+0+
+b11 '
+b10 2
+0!
+0.
+0%
+b101 &
+1"
+#70000
+0"
+#75000
+b0 1
+1!
+1.
+b11 2
+b11 )
+b110 &
+1"
+#80000
+0"
+#85000
+b1 1
+b100 )
+b0 2
+1%
+b111 &
+1"
+#90000
+0"
+#95000
+b10 1
+b1 2
+b101 )
+1+
+b10011 '
+b1000 &
+1"
+#100000
+0"
+#105000
+b10 *
+b11 1
+b110 )
+0+
+b110011 '
+b10 2
+0!
+0.
+b1001 &
+1"
+#110000
+0"
+#115000
+b0 1
+b11 *
+1!
+1.
+b11 2
+b111 )
+1+
+b1110011 '
+b10 ,
+b1010 &
+1"
+#120000
+0"
+#125000
+b0 *
+b1 1
+b11 ,
+1(
+b0 2
+1"
+#130000
+0"
+#135000
+b10 1
+b1 2
+b0 )
+b0 ,
+1"
