@@ -13,4 +13,10 @@ uart_rtl: $(RTL)/uart_rx.v $(RTL)/uart_tx.v $(RTL)/uart_tb.sv
 
 
 
+clean: 
+	rm -rf $(BUILD)/*.vvp $(BUILD)/*.vcd
 
+git:
+	git add .
+	git commit -m "Update Verilator"
+	git push origin main

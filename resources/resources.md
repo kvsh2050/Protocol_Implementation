@@ -7,3 +7,6 @@
 
 2. **LINUX**
    - Linux go to page: (https://www.linux.com/what-is-linux/)
+
+3. **Verilator**
+   - Verilator Learn: (https://itsembedded.com/dhd/verilator_1/)
