@@ -13,3 +13,8 @@
 
 4. **MEM MAPPING**
    - For detailed memory mapping (https://nerdyelectronics.com/introduction-to-memory-mapping/)
+
+5. **MEMORY MAPPED I/O + RTL**
+   - https://chipmunklogic.com/digital-logic-design/designing-memory-mapped-peripheral-ips-in-rtl/ 
+   - https://nerdyelectronics.com/introduction-to-memory-mapping/ 
+   

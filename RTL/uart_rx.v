@@ -15,7 +15,9 @@ module uart_rx#(parameter BAUD_RATE = 9600, CLOCK_MHZ = 10_000_000)(
     input clk,
     input rst,                                  // Active high reset
     input bits,                                 // Serial data in (LSB first)
-    output [7:0] data_out                       //Parallel data
+    output [7:0] data_out,                       //Parallel data
+    output data_valid,                       // Data reception complete flag
+    input data_ready
 );
 
 localparam CLOCKS_PER_BIT= CLOCK_MHZ/BAUD_RATE;
@@ -101,7 +103,9 @@ always @(posedge clk) begin
     end
 end
 
-assign data_out = (done_flag)? bits_reg : 8'b0; // Output data only when in STOP_BIT state
+//Quick to raise and drop the flag
+assign data_out = (data_valid && data_ready)? bits_reg : 8'b0; // Output data only when in STOP_BIT state
+assign data_valid = done_flag; // Set data valid flag when reception is complete
 
 endmodule
 
