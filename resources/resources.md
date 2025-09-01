@@ -18,3 +18,5 @@
    - https://chipmunklogic.com/digital-logic-design/designing-memory-mapped-peripheral-ips-in-rtl/ 
    - https://nerdyelectronics.com/introduction-to-memory-mapping/ 
    
+6. **FIRMWARE**
+   - Check out the same folder "Mastering STM32.pdf"
