@@ -41,6 +41,8 @@ assign data_cpu_rx_valid = rx_cpu_valid; // Data valid signal from UART to CPU
 assign rx_cpu_ready = data_cpu_rx_ready; // Data ready signal from CPU to UART
 
 //Module instantiation of the UART core
+
+//Receive and Give to CPU core
 uart_rx#(.BAUD_RATE(BAUD_RATE), .CLOCK_MHZ(CLOCK_MHZ))rx(
     .clk(clk),
     .rst(rst),                                     // Active high reset
@@ -48,8 +50,9 @@ uart_rx#(.BAUD_RATE(BAUD_RATE), .CLOCK_MHZ(CLOCK_MHZ))rx(
     .data_out(rx_cpu_data),                            //Output 
     .data_valid(rx_cpu_valid),                          //Output data valid signal
     .data_ready(rx_cpu_ready)                           //Input
-)
+);
 
+//take from cpu and transmit it out of fpga board
 uart_tx#(.BAUD_RATE(BAUD_RATE), .CLOCK_MHZ(CLOCK_MHZ))tx(
     .clk(clk),
     .rst(rst),
