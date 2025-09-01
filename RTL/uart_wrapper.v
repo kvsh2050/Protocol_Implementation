@@ -56,15 +56,22 @@ module uart_ip#(CLOCK_MHZ= 10_000_000)(
     0x10               |   STATUS             |   R             | Status Register
     ------------------------------------------------------------------------------
 */
+//STATUS REGISTER BITS 
+// 00 : no ops 
+// 01 : valid signal rx data from uart READ
+// 10 : ready signal to give the data from cpu to the uart WRITE
+// others : reserved for now.
+
+
 
 //4 bytes * 8 = 32 bits 
 
 //REGISTER DECLARATION
 reg [31:0] ENABLE_REG;          //0x00
-reg [31:0] BAUD_RATE;           //0x04
+reg [31:0] BAUD;                //0x04
 reg [31:0] DATA_TX;             //0x08
 reg [31:0] DATA_RX;             //0x0C
-reg [31:0] STATUS;              //0x0
+reg [31:0] STATUS;              //0x10
 
 
 //AXI LITE LOGIC 
@@ -97,7 +104,7 @@ always@(posedge ACLK or negedge ARESETN) begin
             //write the data to the register based on the address
             case(wa_addr)
                 8'h00: ENABLE_REG <= {WSTRB[3] ? WDATA[31:24] : 0, WSTRB[2] ? WDATA[23:16] : 0, WSTRB[1] ? WDATA[15:8] : 0, WSTRB[0] ? WDATA[7:0] : 0 }; //enable/disable register
-                8'h04: BAUD_RATE <= {WSTRB[3] ? WDATA[31:24] : 0, WSTRB[2] ? WDATA[23:16] : 0, WSTRB[1] ? WDATA[15:8] : 0, WSTRB[0] ? WDATA[7:0] : 0 };  //baud rate register
+                8'h04: BAUD <= {WSTRB[3] ? WDATA[31:24] : 0, WSTRB[2] ? WDATA[23:16] : 0, WSTRB[1] ? WDATA[15:8] : 0, WSTRB[0] ? WDATA[7:0] : 0 };  //baud rate register
                 8'h08: DATA_TX <= {WSTRB[3] ? WDATA[31:24] : 0, WSTRB[2] ? WDATA[23:16] : 0, WSTRB[1] ? WDATA[15:8] : 0, WSTRB[0] ? WDATA[7:0] : 0 };;    //data tx register
                 default: ; ;
                 //note cannot write the read only registers, need to handle those 
@@ -174,14 +181,40 @@ end
 //MAPPING LOGIC 
 //Now the data is stored in the resisiter block now need to map it to the rtl signals
 //Write reg
-assign rst = enable_reg[0] ? 1'b0 : ((rst_w)? 1 : 0 ); // Active high reset when UART is disabled
+assign rst = ENABLE_REG[0] ? 1'b0 : ((rst_w)? 1 : 0 ); // Active high reset when UART is disabled
 assign cpu_tx_data =  DATA_TX[7:0];
 //Read reg
 assign  DATA_RX[7:0] = cpu_rx_data; 
-assign  STATUS[0] = cpu_rx_valid ; //1 if ready to accept data from cpu
 //Baud rate only write reg 
-BAUD = BAUD_RATE;
+localparam BAUD = BAUD_RATE;
 //if data out is valid then you must set the status register to 1. else dont care.
+
+//----------------------------
+//SEPERATE LOGIC FOR STATUS REGISTER
+//-------------------------------
+always@(posedge clk) begin
+    if(rst) begin
+        STATUS <= 32'b0;
+    end 
+    else begin
+        if(cpu_rx_valid && ! cpu_rx_ready) begin // read the data from uart
+            cpu_rx_ready <= 1'b1;
+            STATUS <= 2'b01;
+        end 
+    end 
+end 
+
+always@(posedge clk) begin
+    if(rst) begin
+        STATUS <= 32'b0; //no ops
+    end 
+    else begin
+        if(cpu_tx_ready) begin // read the data from uart
+            cpu_tx_valid <= 1'b1;
+            STATUS <= 2'b10;
+        end 
+    end 
+end 
 
 //--------------------------------------
 // UART TOP Instantiation
